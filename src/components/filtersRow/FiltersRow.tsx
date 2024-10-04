@@ -7,9 +7,15 @@ interface FiltersRowProps {
 }
 
 const FiltersRow = ({ setFilters, filters }: FiltersRowProps) => {
+  const initialFilters: Filters = {
+    name: false,
+    email: false,
+    isDescending: filters.isDescending,
+  };
+
   const toggleSortBy = <K extends keyof Filters>(field: K) => {
     setFilters({
-      ...filters,
+      ...initialFilters,
       [field]: !filters[field],
     });
   };
@@ -50,7 +56,6 @@ const FiltersRow = ({ setFilters, filters }: FiltersRowProps) => {
               ? `${styles.filterButton} ${styles.selected}`
               : styles.filterButton
           }
-          name="sort"
           onClick={toggleSortOrder}
         >
           Sort
