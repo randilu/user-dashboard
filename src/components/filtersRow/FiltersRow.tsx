@@ -51,14 +51,11 @@ const FiltersRow = ({ setFilters, filters }: FiltersRowProps) => {
           Email
         </button>
         <button
-          className={
-            filters.isDescending
-              ? `${styles.filterButton} ${styles.selected}`
-              : styles.filterButton
-          }
+          className={styles.filterButton}
           onClick={toggleSortOrder}
+          disabled={!filters.name && !filters.email}
         >
-          Sort
+          Sort {filters.isDescending ? "▼" : "▲"}
         </button>
       </div>
     </div>
