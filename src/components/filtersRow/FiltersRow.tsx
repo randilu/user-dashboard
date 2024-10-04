@@ -3,7 +3,7 @@ import styles from "./styles.module.scss";
 
 interface FiltersRowProps {
   filters: Filters;
-  setFilters: React.Dispatch<React.SetStateAction<Filters>>;
+  setFilters: (filters: Filters) => void;
 }
 
 const FiltersRow = ({ setFilters, filters }: FiltersRowProps) => {

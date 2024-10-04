@@ -1,17 +1,17 @@
 import styles from "./styles.module.scss";
 
 interface EmptyGridProps {
-  searchText: string;
+  hasSearchText: boolean;
 }
 
-function EmptyBanner({ searchText }: EmptyGridProps) {
+function EmptyBanner({ hasSearchText }: EmptyGridProps) {
   return (
     <div className={styles.emptyBanner}>
-        {searchText ? (
-          <p> No results found for your search</p>
-        ) : (
-          <p>No users to display</p>
-        )}
+      {hasSearchText ? (
+        <p> No results found for your search</p>
+      ) : (
+        <p>No users to display</p>
+      )}
     </div>
   );
 }

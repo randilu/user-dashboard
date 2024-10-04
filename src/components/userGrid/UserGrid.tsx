@@ -1,12 +1,11 @@
 import { Filters, User } from "../../types";
 import GridItem from "../gridItem";
-import styles from "./styles.module.scss";
-import useFetch from "../../hooks/useFetch";
-import { API_BASE_URL } from "../../constants";
-import { filterUsers, sortUsers } from "../../helpers";
 import Loader from "../loader";
 import Error from "../error";
 import EmptyBanner from "./EmptyBanner";
+import useSearchUsers from "../../hooks/useSearchUsers";
+import React from "react";
+import styles from "./styles.module.scss";
 
 interface UserGridProps {
   searchText: string;
@@ -14,44 +13,32 @@ interface UserGridProps {
 }
 
 const UserGrid = ({ searchText, filters }: UserGridProps) => {
-  let userList;
   const {
     isLoading,
     error,
-    data: users,
-  } = useFetch<User[]>(`${API_BASE_URL}/users`);
+    filteredUsers: users,
+  } = useSearchUsers(searchText, filters);
 
   if (isLoading) {
     return <Loader />;
   }
 
-  if (users === null || error) {
+  if (error) {
     return <Error />;
   }
 
   if (users.length === 0) {
-    return <EmptyBanner searchText={searchText} />;
+    return <EmptyBanner hasSearchText={!!searchText} />;
   }
 
-  if (!searchText.trim()) {
-    userList = users;
-  }
-
-  userList = filterUsers(searchText, users);
-
-  const userGrid =
-    userList.length === 0 ? (
-      <EmptyBanner searchText={searchText} />
-    ) : (
-      sortUsers(userList, filters).map((user: User) => (
-        <GridItem key={user.id} user={user} />
-      ))
-    );
+  const userGrid = users.map((user: User) => (
+    <GridItem key={user.id} user={user} />
+  ));
 
   return (
-    <div>
+    <React.Fragment>
       <div className={styles.gridContainer}>{userGrid}</div>
-    </div>
+    </React.Fragment>
   );
 };
 
