@@ -3,7 +3,12 @@ import { User } from "../../types";
 import GridItem from "../gridItem";
 import styles from "./styles.module.scss";
 
-const UserGrid = ({ searchText }: { searchText: string }) => {
+interface UserGridProps {
+  searchText: string;
+  filters: Filters;
+}
+
+const UserGrid = ({ searchText, filters }: UserGridProps) => {
   const [users, setUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -71,6 +76,18 @@ const UserGrid = ({ searchText }: { searchText: string }) => {
   });
 
   userList = filteredUsers;
+
+  if (filters.name) {
+    userList.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+  if (filters.email) {
+    userList.sort((a, b) => a.email.localeCompare(b.email));
+  }
+
+  if (filters.isDescending) {
+    userList.reverse();
+  }
 
   const userGrid =
     userList.length === 0 ? (

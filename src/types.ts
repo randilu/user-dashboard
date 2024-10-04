@@ -11,10 +11,6 @@ export interface User {
     zipcode: string;
   };
 }
-
-
-
-
 export interface UserResponse {
   id: number;
   name: string;
@@ -37,4 +33,10 @@ export interface UserResponse {
     catchPhrase: string;
     bs: string;
   };
+}
+
+export interface Filters {
+  name: boolean;
+  email: boolean;
+  isDescending: boolean;
 }

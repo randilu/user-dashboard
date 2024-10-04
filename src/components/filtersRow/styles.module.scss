@@ -1,0 +1,28 @@
+.filters {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+  }
+}
+
+.filterButton {
+  padding: 0.75rem;
+  border: 2px solid #10162f;
+  border-radius: 4rem;
+  background-color: #ffffff;
+  margin-right: 0.5rem;
+
+  &:hover {
+    background-color: #c8eee7;
+    border: 2px solid #10162f;
+  }
+}
+
+.selected {
+  background-color: #daf5f0;
+  border: 2px solid #10162f;
+}
