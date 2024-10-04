@@ -2,13 +2,13 @@ import React from "react";
 
 import styles from "./styles.module.scss";
 
-interface SearchProps {
+interface SearchInputProps {
   setSearchText: (text: string) => void;
 }
 
-const Search = ({ setSearchText }: SearchProps) => {
+const SearchInput = ({ setSearchText }: SearchInputProps) => {
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
+    setSearchText(e.target.value.trim());
   };
 
   return (
@@ -23,4 +23,4 @@ const Search = ({ setSearchText }: SearchProps) => {
   );
 };
 
-export default Search;
+export default SearchInput;

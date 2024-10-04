@@ -6,7 +6,7 @@ interface EmptyGridProps {
 
 function EmptyBanner({ hasSearchText }: EmptyGridProps) {
   return (
-    <div className={styles.emptyBanner}>
+    <div className={styles.emptyBanner} data-testid="empty-banner">
       {hasSearchText ? (
         <p> No results found for your search</p>
       ) : (

@@ -4,7 +4,6 @@ import Loader from "../loader";
 import Error from "../error";
 import EmptyBanner from "./EmptyBanner";
 import useSearchUsers from "../../hooks/useSearchUsers";
-import React from "react";
 import styles from "./styles.module.scss";
 
 interface UserGridProps {
@@ -35,11 +34,7 @@ const UserGrid = ({ searchText, filters }: UserGridProps) => {
     <GridItem key={user.id} user={user} />
   ));
 
-  return (
-    <React.Fragment>
-      <div className={styles.gridContainer}>{userGrid}</div>
-    </React.Fragment>
-  );
+  return <div className={styles.gridContainer}>{userGrid}</div>;
 };
 
 export default UserGrid;

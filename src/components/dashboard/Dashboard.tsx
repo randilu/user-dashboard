@@ -14,13 +14,13 @@ function Dashboard() {
   });
 
   return (
-    <div className={styles.dashboardContainer}>
+    <div className={styles.dashboardContainer} data-testid="dashboard">
       <FilterBar
         setSearchText={setSearchText}
         setFilters={setFilters}
         filters={filters}
       />
-      <UserGrid searchText={searchText.trim()} filters={filters} />
+      <UserGrid searchText={searchText} filters={filters} />
     </div>
   );
 }

@@ -4,18 +4,14 @@ import { API_BASE_URL } from "../constants";
 import { filterUsers, sortUsers } from "../helpers";
 
 const useSearchUsers = (searchText: string, filters: Filters) => {
-  const {
-    isLoading,
-    error,
-    data,
-  } = useFetch<User[]>(`${API_BASE_URL}/users`);
+  const { isLoading, error, data } = useFetch<User[]>(`${API_BASE_URL}/users`);
 
   if (data === null || error) {
-    return { isLoading, filteredUsers:[], error };
+    return { isLoading, filteredUsers: [], error };
   }
 
-  if (!searchText.trim()) {
-    return { isLoading, filteredUsers: data, error };
+  if (!searchText) {
+    return { isLoading, filteredUsers: sortUsers(data, filters), error };
   }
 
   const filteredList = filterUsers(searchText, data);
