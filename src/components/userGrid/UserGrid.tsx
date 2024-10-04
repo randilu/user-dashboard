@@ -1,7 +1,12 @@
-import { useEffect, useState } from "react";
-import { User } from "../../types";
+import { Filters, User } from "../../types";
 import GridItem from "../gridItem";
 import styles from "./styles.module.scss";
+import useFetch from "../../hooks/useFetch";
+import { API_BASE_URL } from "../../constants";
+import { filterUsers, sortUsers } from "../../helpers";
+import Loader from "../loader";
+import Error from "../error";
+import EmptyBanner from "./EmptyBanner";
 
 interface UserGridProps {
   searchText: string;
@@ -9,97 +14,43 @@ interface UserGridProps {
 }
 
 const UserGrid = ({ searchText, filters }: UserGridProps) => {
-  const [users, setUsers] = useState<User[]>([]);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [error, setError] = useState<string | null>(null);
+  let userList;
+  const {
+    isLoading,
+    error,
+    data: users,
+  } = useFetch<User[]>(`${API_BASE_URL}/users`);
 
-  useEffect(() => {
-    const fetchUsers = async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(
-          "https://jsonplaceholder.typicode.com/users"
-        );
-        const data = await response.json();
-        setUsers(data);
-      } catch (err) {
-        if (err instanceof Error) {
-          setError(err.message);
-        } else {
-          setError("Failed to fetch users");
-        }
-      }
-      setIsLoading(false);
-    };
-    fetchUsers();
-  }, []);
+  if (isLoading) {
+    return <Loader />;
+  }
 
-  if (error) {
-    return "Error";
+  if (users === null || error) {
+    return <Error />;
   }
 
   if (users.length === 0) {
-    return "Loading...";
+    return <EmptyBanner searchText={searchText} />;
   }
 
-  let userList;
-
-  if (!searchText) {
+  if (!searchText.trim()) {
     userList = users;
   }
 
-  const searchTextLowerCase = searchText.toLowerCase();
-
-  const filteredUsers = users.filter((user) => {
-    const {
-      name,
-      email,
-      phone,
-      website,
-      address: { street, suite, city, zipcode },
-    } = user;
-
-    const fieldsToSearch = [
-      name,
-      email,
-      phone,
-      website,
-      street,
-      suite,
-      city,
-      zipcode,
-    ];
-
-    return fieldsToSearch.some(
-      (field) => field && field.toLowerCase().includes(searchTextLowerCase)
-    );
-  });
-
-  userList = filteredUsers;
-
-  if (filters.name) {
-    userList.sort((a, b) => a.name.localeCompare(b.name));
-  }
-
-  if (filters.email) {
-    userList.sort((a, b) => a.email.localeCompare(b.email));
-  }
-
-  if (filters.isDescending) {
-    userList.reverse();
-  }
+  userList = filterUsers(searchText, users);
 
   const userGrid =
     userList.length === 0 ? (
-      <div>No users found</div>
+      <EmptyBanner searchText={searchText} />
     ) : (
-      userList.map((user: User) => <GridItem key={user.id} user={user} />)
+      sortUsers(userList, filters).map((user: User) => (
+        <GridItem key={user.id} user={user} />
+      ))
     );
 
   return (
-    <div className="container">
+    <div>
       <div className={styles.gridContainer}>{userGrid}</div>
-      {isLoading && <div className="loading">Loading...</div>}
     </div>
   );
 };

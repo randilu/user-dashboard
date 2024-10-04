@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Filters } from "../../types";
 import UserGrid from "../userGrid";
 import Search from "../search";
