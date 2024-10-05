@@ -82,3 +82,7 @@ Open your browser and navigate to `http://localhost:5173/` to view the applicati
 ├── tsconfig.node.json
 └── vite.config.ts
 ```
+
+## Comments
+
+- Ideally, in this kind of application, we would implement pagination while fetching data and debouncing in the search functionality to optimize performance. However, given that the dataset is small, these optimizations were not implemented.
