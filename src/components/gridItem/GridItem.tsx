@@ -12,14 +12,20 @@ const GridItem = ({ user }: GridItemProps) => {
     <div className={styles.gridItem}>
       <div className={styles.card}>
         <p className={styles.label}>
-          <strong>{name}</strong>
+          <b>{name}</b>
         </p>
         <div className={styles.divider}></div>
-        <p className={styles.label}>Email: {email}</p>
-        <p className={styles.label}>Phone: {phone}</p>
-        <p className={styles.label}>Website: {website}</p>
         <p className={styles.label}>
-          Address: {address.street}, {address.suite}, {address.city},{" "}
+          <b>Email:</b> {email}
+        </p>
+        <p className={styles.label}>
+          <b>Phone:</b> {phone}
+        </p>
+        <p className={styles.label}>
+          <b>Website:</b> {website}
+        </p>
+        <p className={styles.label}>
+          <b>Address:</b> {address.street}, {address.suite}, {address.city},{" "}
           {address.zipcode}
         </p>
       </div>

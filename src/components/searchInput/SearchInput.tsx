@@ -16,7 +16,7 @@ const SearchInput = ({ setSearchText }: SearchInputProps) => {
       <input
         type="text"
         className={styles.search}
-        placeholder="Search"
+        placeholder="search here"
         onChange={handleSearch}
       />
     </div>

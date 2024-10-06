@@ -2,16 +2,23 @@ import { Filters } from "../../types";
 import styles from "./styles.module.scss";
 
 interface FiltersRowProps {
+  isDisabled: boolean;
   filters: Filters;
   setFilters: (filters: Filters) => void;
 }
 
-const FiltersRow = ({ setFilters, filters }: FiltersRowProps) => {
+const FiltersRow = ({
+  isDisabled,
+  filters,
+  setFilters,
+}: FiltersRowProps) => {
   const initialFilters: Filters = {
     name: false,
     email: false,
     isDescending: filters.isDescending,
   };
+  const isSortFilterDisabled =
+    (!filters.name && !filters.email) || isDisabled;
 
   const toggleSortBy = <K extends keyof Filters>(field: K) => {
     setFilters({
@@ -36,6 +43,7 @@ const FiltersRow = ({ setFilters, filters }: FiltersRowProps) => {
               ? `${styles.filterButton} ${styles.selected}`
               : styles.filterButton
           }
+          disabled={isDisabled}
           onClick={() => toggleSortBy("name")}
         >
           Name
@@ -47,13 +55,14 @@ const FiltersRow = ({ setFilters, filters }: FiltersRowProps) => {
               : styles.filterButton
           }
           onClick={() => toggleSortBy("email")}
+          disabled={isDisabled}
         >
           Email
         </button>
         <button
           className={styles.filterButton}
           onClick={toggleSortOrder}
-          disabled={!filters.name && !filters.email}
+          disabled={isSortFilterDisabled}
         >
           Sort {filters.isDescending ? "▼" : "▲"}
         </button>

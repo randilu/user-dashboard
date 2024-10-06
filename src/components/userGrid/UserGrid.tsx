@@ -1,23 +1,18 @@
-import { Filters, User } from "../../types";
+import { User } from "../../types";
 import GridItem from "../gridItem";
 import Loader from "../loader";
 import Error from "../error";
 import EmptyBanner from "./EmptyBanner";
-import useSearchUsers from "../../hooks/useSearchUsers";
 import styles from "./styles.module.scss";
 
 interface UserGridProps {
+  isLoading: boolean;
+  error: Error | null;
+  users: User[];
   searchText: string;
-  filters: Filters;
 }
 
-const UserGrid = ({ searchText, filters }: UserGridProps) => {
-  const {
-    isLoading,
-    error,
-    filteredUsers: users,
-  } = useSearchUsers(searchText, filters);
-
+const UserGrid = ({ isLoading, error, users, searchText }: UserGridProps) => {
   if (isLoading) {
     return <Loader />;
   }
