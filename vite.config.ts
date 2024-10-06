@@ -6,6 +6,13 @@ import react from "@vitejs/plugin-react";
 export default defineConfig({
   plugins: [react()],
   base: "/user-dashboard/",
+  css: {
+    preprocessorOptions: {
+      scss: {
+        api: "modern-compiler",
+      },
+    },
+  },
   test: {
     environment: "jsdom",
     globals: true,
