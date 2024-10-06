@@ -4,6 +4,8 @@
 
 Allows to browse and search users fetched from a REST endpoint.
 
+[Visit the deployed version](https://randilu.github.io/user-dashboard/)
+
 ## Features
 
 - Display users from a placeholder API
